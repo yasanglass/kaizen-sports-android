@@ -1,8 +1,5 @@
 package dev.yasan.kaizen.presentation.ui.screen.home
 
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
@@ -14,6 +11,7 @@ import dev.yasan.kaizen.model.Sport
 import dev.yasan.kaizen.presentation.ui.common.KaizenScreen
 import dev.yasan.kaizen.presentation.ui.screen.home.modules.HomeScreenContentError
 import dev.yasan.kaizen.presentation.ui.screen.home.modules.HomeScreenContentLoading
+import dev.yasan.kaizen.presentation.ui.screen.home.modules.HomeScreenContentSuccess
 import dev.yasan.kit.core.Resource
 
 @Composable
@@ -59,10 +57,3 @@ fun HomeScreenContent(modifier: Modifier = Modifier, sports: Resource<List<Sport
 
 }
 
-fun LazyListScope.HomeScreenContentSuccess(sports: List<Sport>) {
-
-    items(items = sports) { sport ->
-        Text(text = sport.name)
-    }
-
-}
