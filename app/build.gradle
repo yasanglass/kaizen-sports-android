@@ -87,6 +87,16 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
+    // Moshi
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi_version")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshi_version")
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+    // OkHTTP logger
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+
     // Leak Canary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
