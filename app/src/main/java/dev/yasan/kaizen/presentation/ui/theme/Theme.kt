@@ -1,4 +1,4 @@
-package dev.yasan.kaizen.ui.theme
+package dev.yasan.kaizen.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

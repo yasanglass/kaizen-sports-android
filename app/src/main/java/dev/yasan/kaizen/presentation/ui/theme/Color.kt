@@ -1,4 +1,4 @@
-package dev.yasan.kaizen.ui.theme
+package dev.yasan.kaizen.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
