@@ -8,7 +8,7 @@ import retrofit2.http.Headers
 interface KaizenApi {
 
     @Headers("Accept: application/json")
-    @GET("/sports")
+    @GET("sports")
     suspend fun getSports(): Response<List<Sport>>
 
 }

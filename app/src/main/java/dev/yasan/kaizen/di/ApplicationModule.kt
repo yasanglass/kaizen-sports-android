@@ -4,10 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.yasan.kaizen.const.KaizenConstants
 import dev.yasan.kaizen.const.NetworkConstants
-import dev.yasan.kaizen.data.source.network.KaizenApi
 import dev.yasan.kaizen.data.repo.SportsRepositoryImp
+import dev.yasan.kaizen.data.source.network.KaizenApi
 import dev.yasan.kaizen.domain.repo.SportsRepository
 import dev.yasan.kit.core.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
@@ -56,7 +55,7 @@ class ApplicationModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(KaizenConstants.BASE_URL)
+            .baseUrl(NetworkConstants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(provideOkHttpClient())
             .build()
