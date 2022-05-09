@@ -6,7 +6,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.yasan.kaizen.const.KaizenConstants
 import dev.yasan.kaizen.const.NetworkConstants
-import dev.yasan.kaizen.data.network.KaizenApi
+import dev.yasan.kaizen.data.source.network.KaizenApi
+import dev.yasan.kaizen.data.repo.SportsRepositoryImp
+import dev.yasan.kaizen.domain.repo.SportsRepository
 import dev.yasan.kit.core.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -63,5 +65,10 @@ class ApplicationModule {
     @Singleton
     @Provides
     fun provideKaizenApi(): KaizenApi = provideRetrofit().create(KaizenApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideSportsRepository(kaizenApi: KaizenApi): SportsRepository =
+        SportsRepositoryImp(kaizenApi = kaizenApi)
 
 }

@@ -1,4 +1,4 @@
-package dev.yasan.kaizen.data.network
+package dev.yasan.kaizen.data.source.network
 
 import dev.yasan.kaizen.model.Sport
 import retrofit2.Response

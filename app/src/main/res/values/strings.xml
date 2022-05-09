@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Kaizen</string>
+    <string name="error_generic">Something went wrong.</string>
 </resources>
