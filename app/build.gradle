@@ -46,6 +46,9 @@ android {
 }
 
 dependencies {
+    // YASAN Development Kit
+    implementation(project(':ydk:core'))
+    implementation(project(':ydk:compose'))
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"

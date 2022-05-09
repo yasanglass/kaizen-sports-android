@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Kaizen"
 include ':app'
+include ':ydk'
+include ':ydk:core'
+include ':ydk:compose'
