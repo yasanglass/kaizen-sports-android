@@ -1,4 +1,4 @@
-package dev.yasan.kaizen.presentation.ui.screen.home.modules
+package dev.yasan.kaizen.presentation.ui.screen.home.states.modules
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateFloatAsState
@@ -8,14 +8,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,20 +33,12 @@ import dev.yasan.kaizen.presentation.ui.theme.KaizenIcons
 import dev.yasan.kit.compose.foundation.grid
 import dev.yasan.kit.compose.type.rubikFamily
 
-fun LazyListScope.HomeScreenContentSuccess(sports: List<Sport>) {
-
-    items(items = sports) { sport ->
-        SportItem(sport = sport)
-    }
-
-}
-
 @Preview(name = "Sport Item")
 @Composable
 fun SportItem(@PreviewParameter(SportPreviewProvider::class) sport: Sport) {
 
     val expanded = rememberSaveable {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
 
     val buttonAngle by animateFloatAsState(if (expanded.value) 180f else 0f)
@@ -91,7 +83,15 @@ fun SportItem(@PreviewParameter(SportPreviewProvider::class) sport: Sport) {
             enter = fadeIn() + expandVertically(),
             exit = fadeOut() + shrinkVertically()
         ) {
-            // TODO show events
+
+            LazyRow(modifier = Modifier.fillMaxWidth()) {
+
+                items(items = sport.events) { event ->
+                    EventItem(modifier = Modifier.padding(start = grid()), event = event)
+                }
+
+            }
+
         }
 
     }

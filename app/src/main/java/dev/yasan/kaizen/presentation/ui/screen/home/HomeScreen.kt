@@ -9,9 +9,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import dev.yasan.kaizen.R
 import dev.yasan.kaizen.model.Sport
 import dev.yasan.kaizen.presentation.ui.common.KaizenScreen
-import dev.yasan.kaizen.presentation.ui.screen.home.modules.HomeScreenContentError
-import dev.yasan.kaizen.presentation.ui.screen.home.modules.HomeScreenContentLoading
-import dev.yasan.kaizen.presentation.ui.screen.home.modules.HomeScreenContentSuccess
+import dev.yasan.kaizen.presentation.ui.screen.home.states.HomeScreenContentError
+import dev.yasan.kaizen.presentation.ui.screen.home.states.HomeScreenContentLoading
+import dev.yasan.kaizen.presentation.ui.screen.home.states.homeScreenContentSuccess
 import dev.yasan.kit.core.Resource
 
 @Composable
@@ -39,7 +39,7 @@ fun HomeScreenContent(modifier: Modifier = Modifier, sports: Resource<List<Sport
 
         when (sports) {
             is Resource.Success -> {
-                HomeScreenContentSuccess(sports = sports.data ?: emptyList())
+                homeScreenContentSuccess(sports = sports.data ?: emptyList())
             }
             is Resource.Error -> {
                 item {

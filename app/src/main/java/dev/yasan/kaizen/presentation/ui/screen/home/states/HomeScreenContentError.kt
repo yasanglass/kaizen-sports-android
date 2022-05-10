@@ -1,4 +1,4 @@
-package dev.yasan.kaizen.presentation.ui.screen.home.modules
+package dev.yasan.kaizen.presentation.ui.screen.home.states
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
