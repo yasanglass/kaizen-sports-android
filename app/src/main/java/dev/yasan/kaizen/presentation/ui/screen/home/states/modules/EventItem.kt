@@ -2,8 +2,7 @@ package dev.yasan.kaizen.presentation.ui.screen.home.states.modules
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.material.icons.rounded.Star
@@ -27,6 +26,11 @@ import dev.yasan.kaizen.presentation.ui.theme.KaizenIcons
 import dev.yasan.kit.compose.foundation.grid
 import dev.yasan.kit.compose.type.rubikFamily
 
+/**
+ * Displays a [SportEvent] item.
+ *
+ * @see EventTimer
+ */
 @Composable
 fun EventItem(
     modifier: Modifier = Modifier,
@@ -37,30 +41,41 @@ fun EventItem(
         modifier = modifier
             .padding(vertical = grid(1.5f))
             .border(
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colorScheme.onSurface,
+                shape = MaterialTheme.shapes.large,
+                color = MaterialTheme.colorScheme.outline,
                 width = 1.dp
             )
             .clip(MaterialTheme.shapes.medium)
-            .padding(grid(2)),
+            .padding(grid(2))
+            .widthIn(min = grid(20)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        EventTimer(timeTargetSeconds = event.startTime)
+
+        val icon = if (event.favorite.value) KaizenIcons.Star else KaizenIcons.StarBorder
+        val iconTint =
+            if (event.favorite.value) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurface
+
         Icon(
             modifier = Modifier
+                .padding(vertical = grid(0.5f))
                 .clip(CircleShape)
                 .clickable {
                     event.favorite.value = !event.favorite.value
                 }
                 .padding(grid()),
-            imageVector = if (event.favorite.value) KaizenIcons.Star else KaizenIcons.StarBorder,
+            imageVector = icon,
             contentDescription = null,
-            tint = if (event.favorite.value) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurface
+            tint = iconTint
         )
 
-        event.nameSplit.forEach {
+        event.nameSplit.forEachIndexed { index, name ->
+            if (index != 0) {
+                Spacer(modifier = Modifier.requiredHeight(grid(0.5f)))
+            }
             Text(
-                text = it,
+                text = name,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontFamily = rubikFamily,
                 fontSize = 12.sp,

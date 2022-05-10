@@ -23,7 +23,7 @@ class SportsRepositoryImp @Inject constructor(private val kaizenApi: KaizenApi) 
         try {
             response = kaizenApi.getSports()
         } catch (e: Exception) {
-            Log.d(TAG, "getRemoteWallpapers: ${e.message}")
+            Log.d(TAG, "getSports: ${e.message}")
             return Resource.Error(messageResourceId = R.string.error_generic)
         }
         return try {

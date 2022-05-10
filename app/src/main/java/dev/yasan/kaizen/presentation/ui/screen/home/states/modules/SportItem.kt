@@ -4,10 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -84,10 +81,22 @@ fun SportItem(@PreviewParameter(SportPreviewProvider::class) sport: Sport) {
             exit = fadeOut() + shrinkVertically()
         ) {
 
-            LazyRow(modifier = Modifier.fillMaxWidth()) {
+            LazyRow(
+                modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = grid())
+            ) {
+
+                item {
+                    Spacer(modifier = Modifier.requiredWidth(grid(0.5f)))
+                }
 
                 items(items = sport.events) { event ->
-                    EventItem(modifier = Modifier.padding(start = grid()), event = event)
+                    EventItem(modifier = Modifier.padding(start = grid(1.5f)), event = event)
+                }
+
+                item {
+                    Spacer(modifier = Modifier.requiredWidth(grid(8)))
                 }
 
             }
