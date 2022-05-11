@@ -4,14 +4,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Text
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarBorder
+import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +32,10 @@ import dev.yasan.kit.compose.type.rubikFamily
 @Composable
 fun EventItem(
     modifier: Modifier = Modifier,
-    event: SportEvent
+    event: SportEvent,
+    isFavorite: Boolean,
+    addToFavorites: () -> Unit = {},
+    removeFromFavorites: () -> Unit = {}
 ) {
 
     Column(
@@ -53,16 +54,20 @@ fun EventItem(
 
         EventTimer(timeTargetSeconds = event.startTime)
 
-        val icon = if (event.favorite.value) KaizenIcons.Star else KaizenIcons.StarBorder
+        val icon = if (isFavorite) KaizenIcons.Star else KaizenIcons.StarBorder
         val iconTint =
-            if (event.favorite.value) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurface
+            if (isFavorite) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurface
 
         Icon(
             modifier = Modifier
                 .padding(vertical = grid(0.5f))
                 .clip(CircleShape)
                 .clickable {
-                    event.favorite.value = !event.favorite.value
+                    if (isFavorite) {
+                        removeFromFavorites()
+                    } else {
+                        addToFavorites()
+                    }
                 }
                 .padding(grid()),
             imageVector = icon,
@@ -70,7 +75,7 @@ fun EventItem(
             tint = iconTint
         )
 
-        event.nameSplit.forEachIndexed { index, name ->
+        event.getSplitName().forEachIndexed { index, name ->
             if (index != 0) {
                 Spacer(modifier = Modifier.requiredHeight(grid(0.5f)))
             }
@@ -95,7 +100,8 @@ private fun EventItemPreview(
 ) {
     EventItem(
         modifier = Modifier.padding(horizontal = grid(2)),
-        event = event
+        event = event,
+        isFavorite = false
     )
 }
 
@@ -104,11 +110,9 @@ private fun EventItemPreview(
 private fun EventItemPreviewFavorite(
     @PreviewParameter(SportEventPreviewProvider::class) event: SportEvent
 ) {
-    val favoriteEvent = event.copy(
-        favorite = remember { mutableStateOf(true) }
-    )
     EventItem(
         modifier = Modifier.padding(horizontal = grid(2)),
-        event = favoriteEvent
+        event = event,
+        isFavorite = true
     )
 }

@@ -2,7 +2,7 @@ package dev.yasan.kaizen.data.repo
 
 import android.util.Log
 import dev.yasan.kaizen.R
-import dev.yasan.kaizen.data.source.network.KaizenApi
+import dev.yasan.kaizen.data.source.remote.KaizenApi
 import dev.yasan.kaizen.domain.repo.SportsRepository
 import dev.yasan.kaizen.model.Sport
 import dev.yasan.kit.core.Resource

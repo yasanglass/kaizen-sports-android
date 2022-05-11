@@ -21,10 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.sp
+import dev.yasan.kaizen.R
 import dev.yasan.kaizen.model.Sport
+import dev.yasan.kaizen.model.SportEvent
 import dev.yasan.kaizen.presentation.ui.preview.provider.SportPreviewProvider
 import dev.yasan.kaizen.presentation.ui.theme.KaizenIcons
 import dev.yasan.kit.compose.foundation.grid
@@ -32,7 +37,12 @@ import dev.yasan.kit.compose.type.rubikFamily
 
 @Preview(name = "Sport Item")
 @Composable
-fun SportItem(@PreviewParameter(SportPreviewProvider::class) sport: Sport) {
+fun SportItem(
+    @PreviewParameter(SportPreviewProvider::class) sport: Sport,
+    isFavorite: (SportEvent) -> Boolean = { false },
+    addToFavorites: (SportEvent) -> Unit = {},
+    removeFromFavorites: (SportEvent) -> Unit = {}
+) {
 
     val expanded = rememberSaveable {
         mutableStateOf(true)
@@ -83,16 +93,40 @@ fun SportItem(@PreviewParameter(SportPreviewProvider::class) sport: Sport) {
 
             LazyRow(
                 modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = grid())
+                    .animateContentSize()
+                    .fillMaxWidth()
+                    .padding(vertical = grid())
             ) {
 
                 item {
                     Spacer(modifier = Modifier.requiredWidth(grid(0.5f)))
                 }
 
-                items(items = sport.events) { event ->
-                    EventItem(modifier = Modifier.padding(start = grid(1.5f)), event = event)
+                items(items = sport.events, key = { it.id }) { event ->
+                    EventItem(
+                        modifier = Modifier.padding(start = grid(1.5f)),
+                        event = event,
+                        isFavorite = isFavorite(event),
+                        addToFavorites = {
+                            addToFavorites(event)
+                        },
+                        removeFromFavorites = {
+                            removeFromFavorites(event)
+                        }
+                    )
+                }
+
+                item {
+                    if (sport.events.isEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(grid(2)),
+                            text = stringResource(R.string.no_events),
+                            color = MaterialTheme.colorScheme.error,
+                            fontFamily = rubikFamily,
+                            fontSize = 16.sp,
+                            fontStyle = FontStyle.Italic
+                        )
+                    }
                 }
 
                 item {

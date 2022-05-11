@@ -2,4 +2,5 @@
     <string name="app_name">Kaizen</string>
     <string name="error_generic">Something went wrong.</string>
     <string name="try_again">Try again</string>
+    <string name="no_events">No events available</string>
 </resources>

@@ -1,12 +1,18 @@
 package dev.yasan.kaizen.di
 
+import android.app.Application
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.yasan.kaizen.const.NetworkConstants
+import dev.yasan.kaizen.data.repo.FavoritesRepositoryImp
 import dev.yasan.kaizen.data.repo.SportsRepositoryImp
-import dev.yasan.kaizen.data.source.network.KaizenApi
+import dev.yasan.kaizen.data.source.local.FavoritesDatabase
+import dev.yasan.kaizen.data.source.local.SportEventDao
+import dev.yasan.kaizen.data.source.remote.KaizenApi
+import dev.yasan.kaizen.domain.repo.FavoritesRepository
 import dev.yasan.kaizen.domain.repo.SportsRepository
 import dev.yasan.kit.core.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
@@ -69,5 +75,26 @@ class ApplicationModule {
     @Provides
     fun provideSportsRepository(kaizenApi: KaizenApi): SportsRepository =
         SportsRepositoryImp(kaizenApi = kaizenApi)
+
+    @Singleton
+    @Provides
+    fun provideFavoritesRepository(sportEventDao: SportEventDao): FavoritesRepository =
+        FavoritesRepositoryImp(dao = sportEventDao)
+
+    @Singleton
+    @Provides
+    fun provideFavoritesDatabase(
+        app: Application,
+        callback: FavoritesDatabase.CallBack
+    ) = Room.databaseBuilder(
+        app,
+        FavoritesDatabase::class.java,
+        FavoritesDatabase.DATABASE_NAME
+    ).fallbackToDestructiveMigration()
+        .addCallback(callback)
+        .build()
+
+    @Provides
+    fun provideSportEventDao(favoritesDatabase: FavoritesDatabase) = favoritesDatabase.sportEventDao()
 
 }
