@@ -2,6 +2,7 @@ package dev.yasan.kaizen.presentation.ui.screen.home.states.modules
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -35,7 +36,8 @@ import dev.yasan.kaizen.presentation.ui.theme.KaizenIcons
 import dev.yasan.kit.compose.foundation.grid
 import dev.yasan.kit.compose.type.rubikFamily
 
-@Preview(name = "Sport Item")
+@OptIn(ExperimentalFoundationApi::class)
+@Preview(name = "Sport Item", showBackground = true)
 @Composable
 fun SportItem(
     @PreviewParameter(SportPreviewProvider::class) sport: Sport,
@@ -102,9 +104,13 @@ fun SportItem(
                     Spacer(modifier = Modifier.requiredWidth(grid(0.5f)))
                 }
 
-                items(items = sport.events, key = { it.id }) { event ->
+                items(
+                    items = sport.events.sortedByDescending(isFavorite),
+                    key = { it.id }) { event ->
                     EventItem(
-                        modifier = Modifier.padding(start = grid(1.5f)),
+                        modifier = Modifier
+                            .padding(start = grid(1.5f))
+                            .animateItemPlacement(),
                         event = event,
                         isFavorite = isFavorite(event),
                         addToFavorites = {
